@@ -6,5 +6,7 @@
     "description": "A short description of the project.",
     "year": "2014",
     "domain_name": "example.com",
-    "version": "0.1.0"
+    "version": "0.1.0",
+    "heroku_app_name": "my-heroku-app",
+    "heroku_staging_app_name": "my-heroku-app"
 }

@@ -1,0 +1,29 @@
+machine:
+  timezone:
+    America/New_York
+
+  environment:
+    DEBUG: True
+    DATABASE_URL: postgis://localhost/circle_test
+    COMPRESS_ENABLED: "False"
+    COMPRESS_OFFLINE: "False"
+    THUMBNAIL_DEBUG: "False"
+
+dependencies:
+  override:
+    - pip install -r requirements/test.txt --exists-action=w
+
+test:
+  override:
+    - CIRCLECI=True python {{ cookiecutter.repo_name }}/manage.py test
+    - CIRCLECI=True flake8 {{ cookiecutter.repo_name }}
+    - ./scripts/curly-spacing.sh -d {{ cookiecutter.repo_name }}/templates
+    - ./scripts/django-url.sh -d {{ cookiecutter.repo_name }}/templates
+
+deployment:
+  production:
+    branch: master
+    commands:
+      - git push git@heroku.com:{{ cookiecutter.heroku_app_name }}.git $CIRCLE_SHA1:master
+      - heroku run python {{ cookiecutter.repo_name }}/manage.py syncdb --noinput
+      - heroku run python {{ cookiecutter.repo_name }}/manage.py migrate
