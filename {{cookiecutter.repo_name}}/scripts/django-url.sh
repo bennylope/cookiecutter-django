@@ -1,4 +1,4 @@
-#!/bin/bash
+{% raw %}#!/bin/bash
 
 # Upgrades legacy {% url url_name %} style template tag to Django 1.5+
 # style {% url 'url_name' %}
@@ -61,4 +61,4 @@ else
     EXITCODE=1
   fi
   exit $EXITCODE
-fi
+fi{% endraw %}
