@@ -1,4 +1,4 @@
-#!/bin/bash
+{% raw %}#!/bin/bash
 
 # TODO account for MORE than one space
 
@@ -47,7 +47,7 @@ done
 
 if [ $EDIT -eq 1 ]
 then
-  find $DIR -type f -name "*.$EXT" -print0 | xargs -0 sed -i -r -e "s#\{%([a-zA-Z0-9_.:-]+)#\{% \1#g;s#([a-zA-Z0-9_.:-]+)%\}#\1 %\}#g;s#\{\{([a-zA-Z0-9_.:-]+)#\{\{ \1#g;s#([a-zA-Z0-9_.:-]+)\}\}#\1 \}\}#g" 
+  find $DIR -type f -name "*.$EXT" -print0 | xargs -0 sed -i -r -e "s#\{%([a-zA-Z0-9_.:-]+)#\{% \1#g;s#([a-zA-Z0-9_.:-]+)%\}#\1 %\}#g;s#\{\{([a-zA-Z0-9_.:-]+)#\{\{ \1#g;s#([a-zA-Z0-9_.:-]+)\}\}#\1 \}\}#g"
 else
   grep -rn --include="*.$EXT" "\{%\S\|\S%\}\|\{{\S\|\S\}}" $DIR
   RETVAL=$?
@@ -58,4 +58,4 @@ else
     EXITCODE=1
   fi
   exit $EXITCODE
-fi
+fi{% endraw %}
