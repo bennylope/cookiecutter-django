@@ -1,5 +1,10 @@
 # This file is here because many Platforms as a Service look for
-#	requirements.txt in the root directory of a project.
+# requirements.txt in the root directory of a project.
+# ----------------------------------------------------------------------------
+# pylibmc *must* be present in *this* file in order to use Memcached on
+# Heroku's platform because the buildpack looks in *this* file only for the
+# library before conditionally bootstrapping libmemcached
+
 pylibmc==1.3.0
 django-heroku-memcacheify==0.5
 -r requirements/production.txt
