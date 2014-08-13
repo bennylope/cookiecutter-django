@@ -4,7 +4,7 @@ machine:
 
   environment:
     DEBUG: True
-    DATABASE_URL: postgis://localhost/circle_test
+    DATABASE_URL: postgres://localhost/circle_test
     COMPRESS_ENABLED: "False"
     COMPRESS_OFFLINE: "False"
     THUMBNAIL_DEBUG: "False"
