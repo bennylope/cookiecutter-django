@@ -28,6 +28,9 @@ os.environ.setdefault("DJANGO_CONFIGURATION", "Production")
 from configurations.wsgi import get_wsgi_application
 application = get_wsgi_application()
 
-# Apply WSGI middleware here.
-# from helloworld.wsgi import HelloWorldApplication
-# application = HelloWorldApplication(application)
+# Basic auth middleware added if both HTTP username and password are provided.
+from .auth import BasicAuthMiddleware
+HTTP_USERNAME = os.environ.get("HTTP_USERNAME")
+HTTP_PASSWORD = os.environ.get("HTTP_PASSWORD")
+if HTTP_USERNAME and HTTP_PASSWORD:
+    application = BasicAuthMiddleware(application, HTTP_USERNAME, HTTP_PASSWORD)

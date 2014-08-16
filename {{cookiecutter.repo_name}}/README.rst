@@ -105,3 +105,11 @@ Run these commands to deploy the project to Heroku:
     heroku run python {{cookiecutter.repo_name}}/manage.py createsuperuser
     heroku open
 
+HTTP Basic Auth
+---------------
+
+You can protect your site with HTTP basic auth, useful primarily for
+development and staging sites, by providing an HTTP basic auth username and
+password. If both `HTTP_USERNAME` and `HTTP_PASSWORD` are present in the
+process environment then your WSGI application will activate the HTTP basic
+auth middleware and use the provided credentials.
