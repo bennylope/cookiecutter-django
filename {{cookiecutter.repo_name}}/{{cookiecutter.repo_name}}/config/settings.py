@@ -173,9 +173,9 @@ class Common(Configuration):
     )
 
     TEMPLATE_LOADERS = (
-            'django.template.loaders.filesystem.Loader',
-            'django.template.loaders.app_directories.Loader',
-        )
+        'django.template.loaders.filesystem.Loader',
+        'django.template.loaders.app_directories.Loader',
+    )
 
     # See: http://django-crispy-forms.readthedocs.org/en/latest/install.html#template-packs
     CRISPY_TEMPLATE_PACK = 'bootstrap3'
@@ -379,10 +379,10 @@ class Production(Common):
     ########## EMAIL
     DEFAULT_FROM_EMAIL = values.Value(
             '{{cookiecutter.project_name}} <noreply@{{cookiecutter.domain_name}}>')
-    EMAIL_HOST = values.Value('smtp.sendgrid.com')
-    EMAIL_HOST_PASSWORD = values.SecretValue(environ_prefix="", environ_name="SENDGRID_PASSWORD")
-    EMAIL_HOST_USER = values.SecretValue(environ_prefix="", environ_name="SENDGRID_USERNAME")
-    EMAIL_PORT = values.IntegerValue(587, environ_prefix="", environ_name="EMAIL_PORT")
+    EMAIL_HOST = values.Value('smtp.mandrillapp.com')
+    EMAIL_HOST_PASSWORD = values.SecretValue(environ_name="EMAIL_HOST_PASSWORD")
+    EMAIL_HOST_USER = values.SecretValue(environ_name="EMAIL_HOST_USER")
+    EMAIL_PORT = values.IntegerValue(587, environ_name="EMAIL_PORT")
     EMAIL_SUBJECT_PREFIX = values.Value('[{{cookiecutter.project_name}}] ', environ_name="EMAIL_SUBJECT_PREFIX")
     EMAIL_USE_TLS = True
     SERVER_EMAIL = EMAIL_HOST_USER
@@ -410,4 +410,3 @@ class Production(Common):
     ########## END CACHING
 
     ########## Your production stuff: Below this line define 3rd party libary settings
-
