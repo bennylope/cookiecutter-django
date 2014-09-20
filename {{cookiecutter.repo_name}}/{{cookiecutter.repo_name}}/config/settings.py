@@ -270,7 +270,7 @@ class Common(Configuration):
                 'class': 'logging.StreamHandler',
                 'formatter': 'concise',
             },
-            'syslog': {
+            'stdout': {
                 'level': 'INFO',
                 'class': 'logging.StreamHandler',
                 'formatter': 'verbose',
