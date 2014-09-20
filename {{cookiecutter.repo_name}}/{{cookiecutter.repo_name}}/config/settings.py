@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/dev/ref/settings/
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 import os
+import sys
 from os.path import join
 
 # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
@@ -247,26 +248,54 @@ class Common(Configuration):
     # more details on how to customize your logging configuration.
     LOGGING = {
         'version': 1,
-        'disable_existing_loggers': False,
-        'filters': {
-            'require_debug_false': {
-                '()': 'django.utils.log.RequireDebugFalse'
-            }
+        'disable_existing_loggers': True,
+        'root': {
+            'level': 'WARNING',
+            'handlers': ['sentry'],
+        },
+        'formatters': {
+            'verbose': {
+                'format': '%(levelname)s %(asctime)s %(module)s %(process)d %(thread)d %(message)s'
+            },
+            'concise': {
+                'format': '%(name)s %(levelname)s %(asctime)s %(message)s'
+            },
         },
         'handlers': {
-            'mail_admins': {
+            'sentry': {
                 'level': 'ERROR',
-                'filters': ['require_debug_false'],
-                'class': 'django.utils.log.AdminEmailHandler'
-            }
+                'class': 'raven.contrib.django.handlers.SentryHandler',
+            },
+            'console': {
+                'level': 'DEBUG',
+                'class': 'logging.StreamHandler',
+                'formatter': 'concise',
+            },
+            'syslog': {
+                'level': 'INFO',
+                'class': 'logging.StreamHandler',
+                'formatter': 'verbose',
+                'stream': sys.stdout,
+            },
         },
         'loggers': {
-            'django.request': {
-                'handlers': ['mail_admins'],
+            'django.db.backends': {
                 'level': 'ERROR',
-                'propagate': True,
+                'handlers': ['console'],
+                'propagate': False,
             },
-        }
+            'raven': {
+                'level': 'DEBUG',
+                'handlers': ['console'],
+                'propagate': False,
+            },
+            'sentry.errors': {
+                'level': 'DEBUG',
+                'handlers': ['console'],
+                'propagate': False,
+            },
+            # Configure project/library specific logging here as needed
+        },
     }
     ########## END LOGGING CONFIGURATION
 
