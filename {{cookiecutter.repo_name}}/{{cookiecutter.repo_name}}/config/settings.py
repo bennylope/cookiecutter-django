@@ -379,8 +379,10 @@ class Production(Common):
         'storages',
     )
 
+    # Set below to 'storages.backends.s3boto.S3BotoStorage' to use S3
     # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
-    STATICFILES_STORAGE = DEFAULT_FILE_STORAGE = 'storages.backends.s3boto.S3BotoStorage'
+    DEFAULT_FILE_STORAGE = values.Value(default='django.core.files.storage.FileSystemStorage')
+    STATICFILES_STORAGE = values.Value(default=DEFAULT_FILE_STORAGE)
 
     # See: http://django-storages.readthedocs.org/en/latest/backends/amazon-S3.html#settings
     AWS_ACCESS_KEY_ID = values.SecretValue()
@@ -400,8 +402,10 @@ class Production(Common):
             AWS_EXPIREY)
     }
 
+    # Set below to 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME to
+    # use S3
     # See: https://docs.djangoproject.com/en/dev/ref/settings/#static-url
-    STATIC_URL = 'https://s3.amazonaws.com/%s/' % AWS_STORAGE_BUCKET_NAME
+    STATIC_URL = values.Value(default='/static/')
     ########## END STORAGE CONFIGURATION
 
     ########## EMAIL

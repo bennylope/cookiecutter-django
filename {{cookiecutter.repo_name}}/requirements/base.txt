@@ -36,5 +36,7 @@ django-autoslug==1.7.2
 # Useful things
 django-email-users==0.1.0
 
+# Assets
+dj-static==0.0.6
 
 # Your custom requirements go here
