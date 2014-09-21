@@ -30,7 +30,7 @@ case "$1" in
     APPNAME={{ cookiecutter.heroku_app_name }}
     ;;
   promote)
-    heroku pipeline:diff --app-name={{ cookiecutter.heroku_staging_app_name }}
+    heroku pipeline:diff --app={{ cookiecutter.heroku_staging_app_name }}
     read -p "Is this ready to promote to production? (y/n) " CONFIRM
 
     case "$CONFIRM" in
@@ -45,8 +45,8 @@ case "$1" in
     esac
 
     printf "Promoting to production...\n"
-    heroku pipeline:diff --app-name={{ cookiecutter.heroku_staging_app_name }}
-    heroku run migrate --app-name={{ cookiecutter.heroku_app_name }}
+    heroku pipeline:diff --app={{ cookiecutter.heroku_staging_app_name }}
+    heroku run migrate --app={{ cookiecutter.heroku_app_name }}
     exit
     ;;
   *)
@@ -58,10 +58,10 @@ esac
 case "$2" in
   deploy)
     git push heroku-$APPNAME master
-    heroku run migrate --app-name=$APPNAME
+    heroku run migrate --app=$APPNAME
     ;;
   run)
-    heroku run python {{ cookiecutter.repo_name }}/manage.py "${@:3}" --app-name=$APPNAME
+    heroku run python {{ cookiecutter.repo_name }}/manage.py "${@:3}" --app=$APPNAME
     ;;
 esac
 
