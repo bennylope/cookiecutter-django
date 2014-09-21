@@ -11,10 +11,11 @@ command -v workon > /dev/null 2>&1 || { echo "ERROR: install virtualenvwrapper f
 
 # Create a new virtualenv
 echo "Creating the virtualenv 'my-project'..."
-mkvirtualenv {{ cookiecutter.repo_name }} --python=3.4
+PYTHON_PATH=$(which python3.4)
+mkvirtualenv {{ cookiecutter.repo_name }} --python=$PYTHON_PATH
 
 echo "Installing the project's local Python dependencies..."
-pip install -r requirements/local.txt
+workon {{ cookiecutter.repo_name }} && pip install -r requirements/local.txt
 
 echo "Installing the project's Node dependencies..."
 npm install
@@ -22,4 +23,7 @@ npm install
 echo "Creating a new database (your PostgreSQL server must be running)"
 psql -c "CREATE DATABASE {{ cookiecutter.repo_name }}"
 
-echo "All set and ready to rock!"
+echo "\n\n---------\n"
+echo "Your new PostgreSQL database is named {{ cookiecutter.repo_name }}"
+echo "Your new virtualenv is named {{ cookiecutter.repo_name }}"
+echo "Type 'workon {{ cookiecutter.repo_name }}' to source the environment"
