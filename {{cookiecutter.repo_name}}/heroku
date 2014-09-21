@@ -45,7 +45,7 @@ case "$1" in
     esac
 
     printf "Promoting to production...\n"
-    heroku pipeline:diff --app={{ cookiecutter.heroku_staging_app_name }}
+    heroku pipeline:promote --app={{ cookiecutter.heroku_staging_app_name }}
     heroku run migrate --app={{ cookiecutter.heroku_app_name }}
     exit
     ;;
