@@ -2,8 +2,17 @@
 
 # This script controls the app environment for Heroku commands
 #
-# Usage:
-# > ./heroku <environment> <some command>
+# General usage:
+# > ./heroku <environment> <some Heroku CLI command>
+#
+# Deployment:
+# > ./heroku <environment> deploy
+#
+# Django commands:
+# > ./heroku <environment> run <Django management command and args>
+#
+# Production pipeline deployment:
+# > ./heroku promote
 #
 # Example:
 # > ./heroku staging config:set MY_ENV_VAR=something
